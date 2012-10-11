@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+
+<%= link_to 'Edit', edit_cart_path(cart) %> |
+<%= link_to 'Back', store_path %>
+
+<% unless cart.line_items.empty? %>
+<div class="cart_title" >Your Cart</div>
+<table>
+<thead>
+	<th></th>
+	<th>Anzahl</th>
+	<th>Produkt</th>
+	<th>Einzelpreis</th>
+	<th>Gesamt</th>
+</thead>
+
+<%= # render(cart.line_items) 
+%>
+
+<% @cart.line_items.each do |item| %>
+<tr>
+<td><%= link_to 'Remove', item, :method => :delete %></td>
+<td><%= item.quantity %></td>
+<td><%= item.product.title %></td>
+<td><%= item.product.price %> &euro;</td>
+<td class="item_price" ><%= number_to_currency(item.total_price, :unit => "&euro;", :separator => ",", :delimiter => "", :format => "%n %u") %></td>
+</tr>
+<% end %>
+
+<tr class="total_line">
+<td></td>
+<td></td>
+<td><strong>Total</strong></td>
+<td></td>
+<td class="total_cell" ><%= number_to_currency(cart.total_price, :unit => "&euro;", :separator => ",", :delimiter => "", :format => "%n %u") %></td>
+</tr>
+</table>
+
+<%= button_to 'Warenkorb leeren', cart, :method => :delete, :confirm => 'Are you sure?' %>
+<% end %>
+
+
+<p><%= # pluralize(session[:counter], 'time') if session[:counter] >= 5 
+%></p>
